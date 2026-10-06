@@ -1,50 +1,5 @@
 [
   {
-    "word": "a",
-    "translations": [
-      {
-        "translation": "字母A；第一流的；学业成绩达最高标准的评价符号",
-        "type": "n"
-      },
-      {
-        "translation": "[物]安（ampere）",
-        "type": "abbr"
-      }
-    ],
-    "phrases": [
-      {
-        "phrase": "a lot of",
-        "usage": "表示许多，修饰可数或不可数名词",
-        "example": "We have a lot of homework today.",
-        "example_translation": "我们今天有很多作业。"
-      },
-      {
-        "phrase": "a few",
-        "usage": "表示几个、少许，修饰可数名词复数",
-        "example": "I met a few friends at the party.",
-        "example_translation": "我在聚会上见了几个朋友。"
-      },
-      {
-        "phrase": "a number of",
-        "usage": "表示若干、一些，修饰可数名词复数",
-        "example": "A number of students were late.",
-        "example_translation": "一些学生迟到了。"
-      },
-      {
-        "phrase": "a variety of",
-        "usage": "表示各种各样的",
-        "example": "The store sells a variety of fruits.",
-        "example_translation": "这家店卖各种各样的水果。"
-      },
-      {
-        "phrase": "a great deal of",
-        "usage": "表示大量的，修饰不可数名词",
-        "example": "He spent a great deal of time reading.",
-        "example_translation": "他花大量时间阅读。"
-      }
-    ]
-  },
-  {
     "word": "abandon",
     "translations": [
       {

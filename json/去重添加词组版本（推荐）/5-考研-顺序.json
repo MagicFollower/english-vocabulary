@@ -1,46 +1,5 @@
 [
   {
-    "word": "a.",
-    "translations": [
-      {
-        "translation": "天主教徒",
-        "type": "n"
-      }
-    ],
-    "phrases": [
-      {
-        "phrase": "the a. of sth",
-        "usage": "表示「…的天主教徒」",
-        "example": "The a. of the project was clear.",
-        "example_translation": "该项目的天主教徒是清楚的。"
-      },
-      {
-        "phrase": "a. that",
-        "usage": "后接 that 从句，表示「天主教徒…」",
-        "example": "The a. that it failed shocked us.",
-        "example_translation": "它失败的天主教徒让我们震惊。"
-      },
-      {
-        "phrase": "with a.",
-        "usage": "表示「带着天主教徒」",
-        "example": "She looked at him with a..",
-        "example_translation": "她带着天主教徒看着他。"
-      },
-      {
-        "phrase": "sense of a.",
-        "usage": "表示「天主教徒感」",
-        "example": "He had a sense of a..",
-        "example_translation": "他有一种天主教徒感。"
-      },
-      {
-        "phrase": "a. of",
-        "usage": "表示「天主教徒的…」",
-        "example": "The a. of success is hard work.",
-        "example_translation": "成功的天主教徒是努力工作。"
-      }
-    ]
-  },
-  {
     "word": "abandon",
     "translations": [
       {

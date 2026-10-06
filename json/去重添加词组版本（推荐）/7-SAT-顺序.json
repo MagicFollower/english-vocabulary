@@ -1,58 +1,5 @@
 [
   {
-    "word": "a. 灵巧的， 熟练的",
-    "translations": [
-      {
-        "translation": " 灵巧， 机敏",
-        "type": "n"
-      }
-    ],
-    "phrases": [
-      {
-        "phrase": "manual dexterity",
-        "usage": "指手部灵巧度，职业技能评估与医学测试高频搭配",
-        "example": "Surgeons depend on manual dexterity that is built up through years of deliberate practice.",
-        "example_translation": "外科医生依赖的是经年累月刻意练习养成的手部灵巧度。"
-      },
-      {
-        "phrase": "dexterity with",
-        "usage": "后接 with 加工具，指熟练操控某物，描写技艺常用",
-        "example": "The conservator handled the tiny brush with surprising dexterity while restoring the damaged fresco.",
-        "example_translation": "修复受损壁画时，这位修复师以令人惊讶的灵巧操控着那支细小的画笔。"
-      },
-      {
-        "phrase": "with remarkable dexterity",
-        "usage": "介词短语作状语，以出色的机敏完成，叙事与评述通用",
-        "example": "She negotiated the crowded market with remarkable dexterity, never once dropping the basket.",
-        "example_translation": "她在拥挤的集市中穿行得极为灵巧，一次也没有掉落手中的篮子。"
-      },
-      {
-        "phrase": "mental dexterity",
-        "usage": "比喻用法，心智的敏捷，评论思辨与辩论活动时常用",
-        "example": "The panel debate demanded mental dexterity, as arguments shifted with every new objection.",
-        "example_translation": "小组辩论需要心智上的机敏，因为每当出现新质疑，论点就得随之转变。"
-      },
-      {
-        "phrase": "declining dexterity",
-        "usage": "指灵巧度下降，医学与运动机能老化研究语境常见",
-        "example": "Declining dexterity in his fingers forced the violinist to rethink his technique entirely.",
-        "example_translation": "手指灵巧度的下降迫使这位小提琴手彻底重新思考自己的技法。"
-      },
-      {
-        "phrase": "a test of dexterity",
-        "usage": "量词搭配，灵巧性的考验，技能考核与游戏语境常用",
-        "example": "Assembling the clock without tweezers proved to be a severe test of dexterity.",
-        "example_translation": "不用镊子组装这座钟表被证明是对灵巧程度的一次严峻考验。"
-      },
-      {
-        "phrase": "dexterity in handling",
-        "usage": "后接 in 加动名词，指在处理某事上的熟练，评价语境",
-        "example": "His dexterity in handling fragile instruments impressed every technician working in the laboratory.",
-        "example_translation": "他操作精密易碎仪器的娴熟程度令实验室里每位技师都佩服。"
-      }
-    ]
-  },
-  {
     "word": "abandon",
     "translations": [
       {

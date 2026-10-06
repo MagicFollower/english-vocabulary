@@ -1,46 +1,5 @@
 [
   {
-    "word": "a",
-    "translations": [
-      {
-        "translation": "一，一个〔用于未曾提及或对方不知道的人或物的名称前〕",
-        "type": "indefinite article"
-      }
-    ],
-    "phrases": [
-      {
-        "phrase": "a lot",
-        "usage": "表示「很多」",
-        "example": "Thank you a lot.",
-        "example_translation": "非常感谢你。"
-      },
-      {
-        "phrase": "a little",
-        "usage": "表示「一点」",
-        "example": "I need a little help.",
-        "example_translation": "我需要一点帮助。"
-      },
-      {
-        "phrase": "a few",
-        "usage": "表示「几个」",
-        "example": "I have a few questions.",
-        "example_translation": "我有几个问题。"
-      },
-      {
-        "phrase": "a great deal",
-        "usage": "表示「大量」",
-        "example": "A great deal of work.",
-        "example_translation": "大量工作。"
-      },
-      {
-        "phrase": "a while",
-        "usage": "表示「一会儿」",
-        "example": "Wait a while.",
-        "example_translation": "等一会儿。"
-      }
-    ]
-  },
-  {
     "word": "ability",
     "translations": [
       {

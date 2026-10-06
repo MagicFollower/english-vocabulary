@@ -1,46 +1,5 @@
 [
   {
-    "word": "a",
-    "translations": [
-      {
-        "translation": "一(个)；每一(个)",
-        "type": "art"
-      }
-    ],
-    "phrases": [
-      {
-        "phrase": "a lot of",
-        "usage": "表示「大量的」」",
-        "example": "There are a lot of people here.",
-        "example_translation": "这里有很多人。"
-      },
-      {
-        "phrase": "a little bit",
-        "usage": "表示「一点点」」",
-        "example": "I'm a little bit tired.",
-        "example_translation": "我有一点累。"
-      },
-      {
-        "phrase": "a great deal",
-        "usage": "表示「大量的」」",
-        "example": "She has a great deal of experience.",
-        "example_translation": "她有大量的经验。"
-      },
-      {
-        "phrase": "a few",
-        "usage": "表示「几个」」",
-        "example": "I have a few questions.",
-        "example_translation": "我有几个问题。"
-      },
-      {
-        "phrase": "a while ago",
-        "usage": "表示「不久前」」",
-        "example": "I saw him a while ago.",
-        "example_translation": "我不久前见过他。"
-      }
-    ]
-  },
-  {
     "word": "abandon",
     "translations": [
       {
