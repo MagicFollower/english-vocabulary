@@ -329,6 +329,17 @@ figure {
 
 .word-row[data-selected='true'] {
   background: var(--accent-soft);
+  /* 与列表宿主 .list-scroller（:411 的 10px 圆角 + overflow:hidden）和右侧 .phrase-item
+     （:470）同值；原先是方角通栏色带，选中态与这两处圆角轮廓对不上。 */
+  border-radius: 10px;
+}
+
+/* 选中带左上/右上多出的那两截短线来自上一行的 border-bottom：.word-row 只有下边框、没有上边框，
+   所以贴着选中带上沿的那条线只可能是前一个兄弟的——它是通栏直边，配不上这里的圆角。
+   选中行自己的下边框跟着圆角走，因此底部两角本来就干净。
+   用 transparent 而不是 none：保留那 1px 占位，react-window 的行高与虚拟偏移都不受影响。 */
+.word-row:has(+ .word-row[data-selected='true']) {
+  border-bottom-color: transparent;
 }
 
 .word-row-head {
