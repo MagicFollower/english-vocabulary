@@ -1,7 +1,8 @@
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { app, BrowserWindow, nativeTheme, screen } from 'electron';
+import { app, BrowserWindow, Menu, nativeTheme, screen } from 'electron';
+import type { MenuItemConstructorOptions } from 'electron';
 import { ensureDatabase } from './db';
 import { QueryService } from './queries';
 import { StudyService, todayLocalDate } from './study';
@@ -17,6 +18,7 @@ const DEFAULT_BOUNDS: WindowBounds = { x: 0, y: 0, width: 1645, height: 1215 };
 const SELFTEST = process.argv.includes('--selftest');
 const SELFTEST_GEOMETRY = process.argv.includes('--selftest-geometry');
 const STUDY_AUDIT = process.argv.includes('--selftest-study');
+const MENU_AUDIT = process.argv.includes('--selftest-menu');
 const BOOT_T0 = Date.now();
 
 function log(line: string): void {
@@ -82,6 +84,69 @@ function clampBounds(input: WindowBounds): { bounds: WindowBounds; clamped: bool
   };
 }
 
+// 顶部那条是 Electron 原生应用菜单（Windows 非客户区，不在 DOM 里，探针只能走主进程）。
+// 不显式安装时看到的是 Electron 自带的默认菜单，标签写死在英文串表里：实测本机
+// app.getLocale() 与 getSystemLocale() 都是 'zh-CN'，菜单仍然是 File/Edit/View/Window，
+// 所以"改 locale 就自动中文"不成立，只能自己出模板。
+// 口径：与默认菜单逐项 1:1（4 个顶级 + 18 个叶子，见 doc/顶部菜单与工具栏中文化.md 的对照表），
+// 行为一律走 role，快捷键与启用条件跟原生一致，这里只换 label。
+// 唯一例外是「最大化」：role:'zoom' 在文档里标的是 macOS 行为，Windows 下不保证生效，
+// 所以显式绑到 isMaximized() 切换，语义与标签一致。
+// 不加 '&' 助记符：中文标签没有单字助记符惯例，写 '&文件' 会按字面把 & 显示出来。
+function installAppMenu(): void {
+  const template: MenuItemConstructorOptions[] = [
+    {
+      label: '文件',
+      submenu: [{ role: 'quit', label: '退出' }]
+    },
+    {
+      label: '编辑',
+      submenu: [
+        { role: 'undo', label: '撤销' },
+        { role: 'redo', label: '重做' },
+        { type: 'separator' },
+        { role: 'cut', label: '剪切' },
+        { role: 'copy', label: '复制' },
+        { role: 'paste', label: '粘贴' },
+        { role: 'delete', label: '删除' },
+        { type: 'separator' },
+        { role: 'selectAll', label: '全选' }
+      ]
+    },
+    {
+      label: '视图',
+      submenu: [
+        { role: 'reload', label: '重新加载' },
+        { role: 'forceReload', label: '强制重新加载' },
+        { role: 'toggleDevTools', label: '切换开发者工具' },
+        { type: 'separator' },
+        { role: 'resetZoom', label: '实际大小' },
+        { role: 'zoomIn', label: '放大' },
+        { role: 'zoomOut', label: '缩小' },
+        { type: 'separator' },
+        { role: 'togglefullscreen', label: '进入或退出全屏' }
+      ]
+    },
+    {
+      label: '窗口',
+      submenu: [
+        { role: 'minimize', label: '最小化' },
+        {
+          label: '最大化',
+          click: () => {
+            const w = BrowserWindow.getFocusedWindow() ?? BrowserWindow.getAllWindows()[0];
+            if (!w) return;
+            if (w.isMaximized()) w.unmaximize();
+            else w.maximize();
+          }
+        },
+        { role: 'close', label: '关闭' }
+      ]
+    }
+  ];
+  Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+}
+
 function boot(): void {
   let settings: Settings;
   let info: DbInfo;
@@ -110,6 +175,7 @@ function boot(): void {
       settings.setBounds({ x: -24000, y: -24000, width: 9000, height: 9000 });
       log('geometry-seed bounds={"x":-24000,"y":-24000,"width":9000,"height":9000}');
     }
+    installAppMenu();
     createWindow();
   });
 
@@ -157,7 +223,7 @@ function boot(): void {
       log(`ready-to-show ms=${Date.now() - BOOT_T0}`);
       log(`title=${win?.getTitle()}`);
       marker('window-shown');
-      if (SELFTEST) void (STUDY_AUDIT ? runStudyAudit() : runSelfTest());
+      if (SELFTEST) void (MENU_AUDIT ? runMenuAudit() : STUDY_AUDIT ? runStudyAudit() : runSelfTest());
     });
 
     if (SELFTEST_GEOMETRY) {
@@ -342,6 +408,39 @@ function boot(): void {
       log(`check ${name} ${pass ? 'PASS' : 'FAIL'} ${detail}`);
     };
     const shotsDir = process.env.SELFTEST_SHOTS;
+
+    // 定向挡：只判顶部原生应用菜单。菜单不在 DOM 里，探针走主进程；改菜单跑这条就够，别惊动全量 42 条。
+    const runMenuAudit = async (): Promise<void> => {
+      const lines: string[] = [];
+      const walk = (nodes: Electron.MenuItem[], depth: number): void => {
+        for (const it of nodes) {
+          if (it.type === 'separator') {
+            lines.push(`${'    '.repeat(depth)}— 分隔线 —`);
+            continue;
+          }
+          lines.push(
+            `${'  '.repeat(depth)}${it.label || '(无标签)'}${it.role ? ` [role=${it.role}]` : ''}${it.accelerator ? ` <${it.accelerator}>` : ''}${it.enabled ? '' : ' (禁用)'}`
+          );
+          if (it.submenu) walk(it.submenu.items, depth + 1);
+        }
+      };
+      walk(Menu.getApplicationMenu()?.items ?? [], 0);
+      lines.forEach((l) => log(`  menu ${l}`));
+      const tops = (Menu.getApplicationMenu()?.items ?? []).map((i) => i.label);
+      const leaves = lines.filter((l) => !l.includes('分隔线')).length - tops.length;
+      const nonChinese = lines.filter((l) => !l.includes('分隔线') && !/[一-鿿]/.test(l));
+      ok(
+        'menu-labels-are-chinese',
+        tops.length === 4 && leaves === 18 && nonChinese.length === 0,
+        `locale=${app.getLocale()} system=${app.getSystemLocale()} tops=${JSON.stringify(tops)} leaves=${leaves} 非中文=${JSON.stringify(nonChinese)}`
+      );
+      const passed = checks.filter((c) => c.includes('PASS')).length;
+      log(`MENU-AUDIT-SUMMARY checks=${checks.length} pass=${passed} fail=${checks.length - passed} mode=menu-audit`);
+      log(passed === checks.length && checks.length === 1 ? 'SELFTEST-OK' : 'SELFTEST-FAIL');
+      // 必须显式退出：不 quit 的话定向挡会一直开着窗口，被 selftest.mjs 的 300 s 超时 SIGTERM 掉，
+      // 判据全绿也拿不到退出码 0（实测踩过）。另两挡同理，见 :237 / :737 / :1780。
+      app.quit();
+    };
 
     const runStudyAudit = async (): Promise<void> => {
       const failures: string[] = [];
